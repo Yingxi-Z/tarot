@@ -11,8 +11,10 @@ const againButton = document.querySelector("#againButton");
 const result = document.querySelector("#result");
 const hint = document.querySelector("#drawHint");
 const spread = document.querySelector("#spread");
+let shuffledCards = [];
 
 function createSpread() {
+  shuffledCards = [...cards].sort(() => Math.random() - 0.5);
   spread.innerHTML = "";
   [-31, -21, -11, 0, 11, 21, 31].forEach((angle, index) => {
     const choice = document.createElement("button");
@@ -22,16 +24,16 @@ function createSpread() {
     choice.style.transform = `translateX(-50%) rotate(${angle}deg)`;
     choice.style.left = `${50 + angle * 1.18}%`;
     choice.innerHTML = '<span class="card-back"><span class="moon">☾</span><span class="card-back-title">TAROT</span></span>';
-    choice.addEventListener("click", drawCard);
+    choice.addEventListener("click", () => drawCard(shuffledCards[index]));
     spread.appendChild(choice);
   });
 }
 
-function drawCard() {
+function drawCard(selectedCard) {
   document.body.classList.add("drawing");
   [...spread.querySelectorAll("button")].forEach((card) => card.disabled = true);
   setTimeout(() => {
-    const card = cards[Math.floor(Math.random() * cards.length)];
+    const card = selectedCard;
     const reversed = Math.random() < 0.32;
     document.querySelector("#cardNumber").textContent = card.n;
     document.querySelector("#cardSymbol").textContent = card.symbol;
