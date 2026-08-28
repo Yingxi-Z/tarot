@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>月影塔罗 · 今日抽牌</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header>
+        <p class="eyebrow">MOONLIT TAROT</p>
+        <h1>月影塔罗</h1>
+        <p class="intro">静下心，想着此刻最想得到回应的问题。</p>
+      </header>
+
+      <section class="reading" aria-live="polite">
+        <div class="stars" aria-hidden="true"></div>
+        <button id="drawButton" class="deck" type="button" aria-label="抽取一张塔罗牌">
+          <span class="card-back"><span class="moon">☾</span><span class="card-back-title">TAROT</span></span>
+          <span class="card-back back-2"></span>
+          <span class="card-back back-3"></span>
+        </button>
+        <p id="drawHint" class="draw-hint">点击牌堆，抽取今日指引</p>
+
+        <article id="result" class="result is-hidden">
+          <div id="cardFace" class="card-face">
+            <span id="cardNumber" class="card-number"></span>
+            <span id="cardSymbol" class="card-symbol"></span>
+            <span id="cardNameOnCard" class="card-name-on-card"></span>
+          </div>
+          <div class="interpretation">
+            <p id="orientation" class="orientation"></p>
+            <h2 id="cardName"></h2>
+            <p id="keywords" class="keywords"></p>
+            <p id="meaning" class="meaning"></p>
+            <button id="againButton" class="again-button" type="button">重新洗牌</button>
+          </div>
+        </article>
+      </section>
+
+      <p class="note">仅供娱乐与自我觉察参考</p>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
