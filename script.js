@@ -7,14 +7,29 @@ const cards = [
   { n: "XVII", symbol: "✧", name: "星星", keys: "希望 · 疗愈 · 指引", text: "经历过的不安正在沉淀为力量。留一点空间给希望，微小但持续的投入会照亮下一段路。" },
   { n: "XIX", symbol: "☀", name: "太阳", keys: "喜悦 · 清晰 · 生命力", text: "让自己走到光里。分享你的热情、接受善意，并相信事情正朝着更明朗的方向展开。" }
 ];
-const drawButton = document.querySelector("#drawButton");
 const againButton = document.querySelector("#againButton");
 const result = document.querySelector("#result");
 const hint = document.querySelector("#drawHint");
+const spread = document.querySelector("#spread");
+
+function createSpread() {
+  spread.innerHTML = "";
+  [-31, -21, -11, 0, 11, 21, 31].forEach((angle, index) => {
+    const choice = document.createElement("button");
+    choice.className = "tarot-choice";
+    choice.type = "button";
+    choice.setAttribute("aria-label", `选择第 ${index + 1} 张塔罗牌`);
+    choice.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+    choice.style.left = `${50 + angle * 1.18}%`;
+    choice.innerHTML = '<span class="card-back"><span class="moon">☾</span><span class="card-back-title">TAROT</span></span>';
+    choice.addEventListener("click", drawCard);
+    spread.appendChild(choice);
+  });
+}
 
 function drawCard() {
   document.body.classList.add("drawing");
-  drawButton.disabled = true;
+  [...spread.querySelectorAll("button")].forEach((card) => card.disabled = true);
   setTimeout(() => {
     const card = cards[Math.floor(Math.random() * cards.length)];
     const reversed = Math.random() < 0.32;
@@ -26,12 +41,12 @@ function drawCard() {
     document.querySelector("#keywords").textContent = reversed ? "停下来校准 · 释放阻力 · 回到内心" : card.keys;
     document.querySelector("#meaning").textContent = reversed ? `当${card.name}以逆位出现，提醒你先放慢一点。${card.text}` : card.text;
     document.querySelector("#cardFace").style.transform = reversed ? "rotate(180deg)" : "none";
-    drawButton.style.display = "none";
+    spread.style.display = "none";
     hint.style.display = "none";
     result.classList.remove("is-hidden");
     document.body.classList.remove("drawing");
   }, 950);
 }
-function reset() { result.classList.add("is-hidden"); drawButton.style.display = "block"; hint.style.display = "block"; drawButton.disabled = false; }
-drawButton.addEventListener("click", drawCard);
+function reset() { result.classList.add("is-hidden"); spread.style.display = "block"; hint.style.display = "block"; createSpread(); }
 againButton.addEventListener("click", reset);
+createSpread();
